@@ -1,75 +1,45 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, TextInput, TouchableOpacity, View } from 'react-native';
+import ChatBubble from '../components/ChatBubble';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const HomeScreen = () => {
+  const [userMessage, setUserMessage] = useState('');
+  const [chat, setChat] = useState<{ sender: 'user' | 'coach'; text: string }[]>([
+    { sender: 'coach', text: 'Hi! How can I support your lifestyle goals today?' },
+  ]);
 
-export default function HomeScreen() {
+  const handleSend = () => {
+    if (!userMessage.trim()) return;
+    const newChat: { sender: 'user' | 'coach'; text: string }[] = [
+      ...chat,
+      { sender: 'user', text: userMessage },
+      { sender: 'coach', text: 'Thanks! I will personalize your suggestions.' },
+    ];
+    setChat(newChat);
+    setUserMessage('');
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+    <SafeAreaView style={{ flex: 1, padding: 16, backgroundColor: 'white' }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+        {chat.map((msg, index) => (
+          <ChatBubble key={index} sender={msg.sender} text={msg.text} />
+        ))}
+      </ScrollView>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <TextInput
+          style={{ flex: 1, borderWidth: 1, borderColor: '#ccc', borderRadius: 25, paddingHorizontal: 15, paddingVertical: 10, marginRight: 10 }}
+          placeholder="Type your message..."
+          value={userMessage}
+          onChangeText={setUserMessage}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <TouchableOpacity onPress={handleSend} style={{ backgroundColor: '#3B82F6', padding: 12, borderRadius: 25 }}>
+          <Ionicons name="send" size={20} color="white" />
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+export default HomeScreen;
