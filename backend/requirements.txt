@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+httpx
+pydantic
+google-cloud-aiplatform
+tqdm
+scikit-learn
+transformers
+beautifulsoup4
+python-multipart
+aiofiles
+python-dotenv
+google-generativeai
