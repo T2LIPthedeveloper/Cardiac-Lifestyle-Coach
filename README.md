@@ -1,50 +1,111 @@
-# Welcome to your Expo app 👋
+# 💊 CareMate AI — Diabetes & Hypertension Assistant
+Authors: Kripashree S., Atul P. (Team KAT)
+## What's CareMate AI?
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+CareMate AI is a Gemini-powered AI coach that offers meal and exercise guidance, interprets vitals, and retrieves medically grounded advice for individuals managing diabetes and hypertension.
 
-## Get started
+Built for the **Healthcare** category in the **Google APAC Solution Challenge 2025**.
 
-1. Install dependencies
+## 🧱 Project Structure
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+project-root/
+├── backend/            # FastAPI + Gemini + RAG logic
+│   ├── main.py
+│   ├── ...
+├── app/                # React Native (Expo) frontend
+├── README.md
+├── docker-compose.yml
+└── .dockerignore
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🚀 Quick Start: Development
 
-## Learn more
+### 1️⃣ Backend (FastAPI)
 
-To learn more about developing your project with Expo, look at the following resources:
+#### ⬇️ Install Dependencies
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+python -m venv venv
 
-## Join the community
+# For macOS and Linux
+source venv/bin/Activate
 
-Join our community of developers creating universal apps.
+# For Windows
+venv/Scripts/Activate.ps1
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+cd backend
+pip install -r requirements.txt
+```
+
+#### ▶️ Run FastAPI Server
+
+```bash
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
+The server will be live at: `http://0.0.0.0:8000`
+
+### 2️⃣ Frontend (React Native with Expo)
+
+#### ⬇️ Install Dependencies
+
+```bash
+npm install
+```
+
+#### ▶️ Start Expo
+
+```bash
+npx expo start
+```
+
+Then choose to open in:
+- Android Emulator
+- iOS Simulator
+- Expo Go App
+
+#### 🔗 Backend Connection (important!)
+
+Use these URLs from React Native depending on environment:
+
+| Platform          | URL to use for API (`fetch`)        |
+|------------------|--------------------------------------|
+| Web              | `http://0.0.0.0:8000`              |
+| iOS Simulator    | `http://0.0.0.0:8000`              |
+| Android Emulator | `http://192.168.0.3:8000`               |
+| Physical Device  | `http://<your-ip>:8000`              |
+
+## 📦 API Endpoints (Backend)
+
+| Method | Endpoint     | Description                              |
+|--------|--------------|------------------------------------------|
+| POST   | `/ask`       | Send a health query                      |
+| GET    | `/meals`     | Get saved meal advice                    |
+| GET    | `/exercise`  | Get saved exercise suggestions           |
+
+## 🧠 Powered By
+
+- Google Vertex AI (Gemini Pro)
+- LangChain
+- FastAPI
+- React Native + Expo
+- GCP Cloud Storage
+
+## 📸 Screenshots & Diagrams
+
+> Add your mockups or prototype screenshots here.
+
+## 📽️ Demo & Links
+
+- 🔗 [Live Demo](#)
+- 📹 [Demo Video](#)
+- 📝 [Pitch Deck (Slides)](#)
+
+## 🤝 Contributing
+
+Pull requests welcome. For major changes, please open an issue first to discuss.
+
+## 📄 License
+
+[MIT License](LICENSE)
